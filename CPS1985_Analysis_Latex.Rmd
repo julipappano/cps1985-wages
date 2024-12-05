@@ -1,0 +1,186 @@
+---
+title: "CPS1985 Dataset Analysis"
+author: "Julieta Pappano"
+date: "2022-Jan-01"
+output: pdf_document
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(tidyverse)
+library(AER)
+library(ggplot2)
+library(stargazer)
+library("viridis") 
+library(broom)
+library(knitr)
+library(kableExtra)
+data(CPS1985)
+
+```
+
+## Dataset
+
+CPS1985 dataset contains 534 observations from the Current Population Survey data collected in 1985 by the US Census Bureau, with information on wages and other characteristics of workers. Table 1 shows the descriptive statistics of the numeric variables contained in this dataset.
+
+```{r, echo=FALSE, results='asis'}
+numeric_vars <- c("wage", "education", "experience", "age")
+categorical_vars <- c("ethnicity", "region", "gender", "occupation", "sector", "union", "married")
+
+numeric_summary <- summary(CPS1985[numeric_vars])
+
+numeric_summary %>%
+  kable(format = "latex", caption = "Summary of Numeric Variables (CPS1985)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), latex_options = "HOLD_position")
+
+cat_summary <- summary(CPS1985[categorical_vars])
+
+cat_summary %>%
+  kable(format = "latex", caption = "Summary of Categorical Variables (CPS1985)",na = " ") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),latex_options = "HOLD_position")
+
+```
+
+## Visualization: Histograms and Boxplots
+
+Figure 1 corresponds to the age variable. The graph has bins with a width of five years and shows that the distribution is skewed to the right, which means that the sample consists mainly of younger people. Most observations are found between 28 and 38 years old. On the other hand, the boxplot on the right allows analysing the spread and centres of the data. For the case of age, it can be seen that the median (Q2) of the observations is around 35 years of age. Furthermore, 25% (Q1) of the observations can be found between 18 to 28 years old, 50% of the observations (IQR = Q3-Q1) fall between 28 and 43 years old and 25% (above Q3) between 44 and 68 years. Lastly, the boxplot confirms the skewness to the right as well.
+
+```{r, echo=FALSE, fig.width=6, fig.height=3, fig.align='center'}
+
+hist_plot_age = ggplot( data = CPS1985 , aes( x = age ) ) +
+  geom_histogram( fill = "darkgrey", color="black" , binwidth = 5 ) +
+  labs(title="Figure 1. Age Distribution", x="Age",y='Count')+
+  theme(plot.title = element_text(hjust = 0.5))
+hist_plot_age
+
+box_plot_age =ggplot(CPS1985, aes(x = age)) +
+  geom_boxplot()+
+  labs(title= "Figure 2. Age Spread", x="Age")+
+  theme(plot.title = element_text(hjust = 0.5))
+box_plot_age 
+```
+
+In the case of experience, bins also have a width of five years. The Figure 3 shows that the distribution is skewed to the right and that most observations can be found in the range from approximately 12 to 17 years of experience. On the other hand, the boxplot shows that the median (Q2) is around 15 years of experience. Furthermore, 25% (Q1) of the observations have between 0 to 8 years of experience, 50% of the observations (IQR = Q3-Q1) between 12 and 26 years and the upper 25% (above Q3) between 26 and 48 years. Lastly, the boxplot shows two outliers that are above 50 years and it also confirms the skewness to the right.
+
+```{r , echo=FALSE, fig.width=6, fig.height=3, fig.align='center'}
+ggplot( data = CPS1985 , aes( x = experience ) ) +
+  geom_histogram( fill = "darkgrey", color="black" , binwidth = 5 ) +
+  labs(title="Figure 3. Experience Distribution",x="Experience",y='Count')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(CPS1985, aes(experience)) +
+  geom_boxplot()+
+  labs(title="Figure 4. Experience Spread",x="Experience")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+Figure 5 shows the distribution of the wage variable. The histogram bins have a width of three dollars per hour and it shows that the distribution is skewed to the right, with most observations found in the range from approximately 4.5 to 7.7 dollars per hour. On the other hand, the boxplot in Figure 6 shows that the median (Q2) is around 7 dollars per hour. Furthermore, 25% (Q1) of the observations have a wage that ranges approximately from 1 to 6 dollars per hour, 50% of the observations (IQR = Q3-Q1) are between 11 and 6 dollars p/h and the upper 25% (above Q3) are between 26 and 48 dollars p/h. The boxplot shows several outliers that are above 20 dollars p/h and also confirms the skewness to the right.
+
+```{r , echo=FALSE, fig.width=6, fig.height=3, fig.align='center'}
+ggplot( data = CPS1985 , aes( x = wage ) ) +
+  geom_histogram( fill = "darkgrey", color="black" , binwidth = 3 ) +
+  labs(title="Figure 5. Wage Distribution",x="Wage",y='Count')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(CPS1985, aes(wage)) +
+  geom_boxplot()+
+  labs(title="Figure 6. Wage Spread", x="Wage")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+In the case of education, bins have a width of five years. The graph (Figure 7) shows that the distribution is moderately skewed to the left and that most observations can be found in the range from approximately 11 to 13 years of education. On the other hand, the boxplot (Figure 8) shows that the median (Q2) is around 11 years of education and coincides with Q1. This could be explained by the several outliers located on the left side of the graph, below 8 years of education, which distort the distribution of observations. Furthermore, 50% of the observations (IQR = Q3-Q1) between 11 and 15 years and the upper 25% (above Q3) between 15 and 18 years.
+
+```{r , echo=FALSE, fig.width=6, fig.height=3, fig.align='center'}
+ggplot( data = CPS1985 , aes( x = education ) ) +
+  geom_histogram( fill = "darkgrey", color="black" , binwidth = 2 ) +
+  labs(title="Figure 7. Education Distribution",x="Education",y='Count')+
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(CPS1985, aes(education)) +
+  geom_boxplot()+
+  labs(title="Figure 8. Education Spread",x="Education")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+Lastly, Figure 9 shows the distribution of wages across occupation categories. As it can be seen, the highest wages can be found in the management category, which is the one with the highest values since 50% of observations (above the median) have salaries between approximately 11 and 27 dollars per hour. However, it should also be noted that this category is the one that presents the biggest dispersion of data. The next category with the highest wages is the technical category, in which 50% of observations (above the median) have wages that range from 11 to 25 dollars per hour. On the other hand, the category with the lowest wages is services. In this case, the median salary is approximately 6 dollars per hour and the overall dispersion of the category goes from approximately 2.5 to 14 dollars per hour. Lastly, worker is the category with the highest number of outliers (5 outliers), followed by services (3 outliers) and management (1 outlier).
+
+```{r, echo=FALSE, fig.width=6, fig.height=3, fig.align='center'}
+ggplot(CPS1985, aes(x=as.factor(occupation), y=wage)) + 
+  geom_boxplot(fill="slateblue", alpha=0.2) + 
+  labs(x="Occupation", y="Wage", title="Figure 9. Data distribution per Occupation category")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+## Visualizations: Scatterpolots
+
+In the first case, considering the trend line, experience and education seem to be negatively associated. This is counterintuitive since this negative relation would imply that the higher the education, the lower the experience. Furthermore, the observations in the scatterplot do not seem to support the said trend. For instance, the observations are very far from the line and are vertically aligned, which shows that the trend line is not correctly representing the relationship between the two variables.
+
+```{r, echo=FALSE, fig.width=6, fig.height=3, fig.align='center'}
+
+plot1<-ggplot( data = CPS1985 , aes( x = education, y=experience ) ) +
+  geom_point( color="blue", size=2) +
+  theme_classic()+
+  labs(x="Education",y="Experience", title = "Figure 10. Relation between Experience and Education")+
+  geom_smooth(method=lm,se=F,formula = y~x, color="black", linewidth=0.5)+
+  theme(plot.title = element_text(hjust = 0.5))
+plot1
+
+```
+
+On the other hand, when education is replaced by age, the trend line shows a positive relationship, which agrees with the general notion that the older a person is, the more experience that person has. Furthermore, the observations are closer to the line which means that there could be a positive association between both variables.
+
+```{r , echo=FALSE, fig.width=6, fig.height=3, fig.align='center'}
+plot2<-ggplot( data = CPS1985 , aes( x = age, y=experience ) ) +
+  geom_point( color="blue", size=2) +
+  theme_classic()+
+  labs(x="Age",y="Experience", title="Figure 11. Relation between Experience and Age")+
+  geom_smooth(method=lm,se=F,formula = y~x, color="black", linewidth=0.5)+
+  theme(plot.title = element_text(hjust = 0.5))
+plot2
+```
+
+## Regression Models
+
+Three simple models are analyzed to understand how age is affected by education, age, and a combination of both. 1) Short model, in which the the effect of education on wage is analyzed 2) Short model, in which the effect of age on wage are analyzed 3) Long mode, in which the effect of education and age on wage are analyzed.
+
+```{r, echo=FALSE, results='asis'}
+model_short_ed <- lm(wage ~ education, data = CPS1985)
+model_short_age <- lm(wage ~ age, data = CPS1985) 
+model_long <- lm(wage ~ education + age, data = CPS1985) 
+
+stargazer(model_short_ed, model_short_age, model_long,
+                          header = FALSE,
+                          type = "latex", 
+                          column.labels = c("Education", "Age", "Education and Age"),
+                          covariate.labels = c("Education", "Age (Years)", "Intercept"),
+                          dep.var.labels = c("Wage"),
+                          notes.align = "l",
+                          label = "tab:regression_models",
+                          title= "Regression model comparison")
+
+
+```
+
+However, this model may be affected by omitted variable bias (OVB). For instance, as a person ages they are more likely to have more years of schooling. Furthermore, age could also be related to higher earnings since generally people who are more experienced in the job market are better prepared, not only in terms of ability but also in relation to their knowledge of the labour market and salary negotiation strategies. As an example, a forty-year-old probably has more years of schooling, is better prepared for an interview, more aware of the wage offered in the market and already knows which companies pay better than a twenty-year-old. This would have a positive effect on both variables: education and earnings.
+
+To calculate the total OVB, the effect of age on education and wage should be taken into consideration. The effect of age on wage was previously calculated in the second regression model outlined above. In Table 1, it can be seen that the effect of age on wage in the more complete model (3) is 0.105. To obtain the total OVB, a regression is conducted to analyze the effect of age on education, as shown in Table 2.
+
+```{r, echo=FALSE,  results='asis'}
+
+model_ov = lm(age~education, data = CPS1985)
+
+
+stargazer(model_ov,
+                          header = FALSE,
+                          type = "latex",
+                          covariate.labels = c("Age (Years)", "Intercept"),
+                          dep.var.labels = c("Education"),
+                          notes.align = "l",
+                          label = "tab:regression_age",
+                          title="Regression OV")
+```
+
+As it can be seen in Table 1 and 2, the effect of age on wage (Y) is 0.105 and the effect of age (OV) on education (X) is -0.672. As such, the total OVB is 0.150\*(-0.672) = -0.071.
