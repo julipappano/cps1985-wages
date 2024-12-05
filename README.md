@@ -17,33 +17,31 @@ The CPS1985 dataset comprises 534 observations from the U.S. Current Population 
 
 ## Key Insights
 ### Descriptive Statistics:
-Median hourly wage: $7.78.
-Workers' median age: 35 years.
-Median levels of education and experience: 12 years and 15 years, respectively.
-Wages and experience distributions are skewed to the right, indicating a concentration of lower values with some high-value outliers.
+* Median hourly wage: $7.78.
+* Workers' median age: 35 years.
+* Median levels of education and experience: 12 years and 15 years, respectively.
+* Wages and experience distributions are skewed to the right, indicating a concentration of lower values with some high-value outliers.
 
 ### Visualizations:
-Histograms and Boxplots: Show data spread, central tendencies, and skewness for variables like wages, education, and experience.
-Scatterplots: Highlight relationships between variables, such as the positive correlation between age and experience.
+* Histograms and Boxplots: Show data spread, central tendencies, and skewness for variables like wages, education, and experience.
+* Scatterplots: Highlight relationships between variables, such as the positive correlation between age and experience.
 
 ### Regression Analysis:
-Three regression models explore how education and age influence wages.
-Omitted variable bias (OVB) is identified and quantified, showcasing the importance of including related predictors.
+* Three regression models explore how education and age influence wages.
+* Omitted variable bias (OVB) is identified and quantified, showcasing the importance of including related predictors.
 
 ## Project Structure
-analysis/: Contains the main RMarkdown file used for the analysis (CPS1985_Analysis.Rmd) and the generated report in PDF format.
-data/: Includes the dataset file (not included in the repository due to licensing restrictions; users must provide their own copy).
-figures/: Contains visualizations generated during the analysis.
+* analysis/: Contains the main RMarkdown file used for the analysis (CPS1985_Analysis.Rmd) and the generated report in PDF format.
+* data/: Includes the dataset file (not included in the repository due to licensing restrictions; users must provide their own copy).
+* figures/: Contains visualizations generated during the analysis.
 
 ## Prerequisites
 To replicate the analysis, ensure you have the following:
-
 * R (version 4.0 or higher)
 * RStudio
 * Required R packages: tidyverse, ggplot2,  dplyr, knitr,  markdown
 
 Install all required packages using:
-
 install.packages(c("tidyverse", "ggplot2", "dplyr", "knitr", "markdown"))
 
 ## Future Work
