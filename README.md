@@ -39,11 +39,15 @@ The CPS1985 dataset comprises 534 observations from the U.S. Current Population 
 To replicate the analysis, ensure you have the following:
 * R (version 4.0 or higher)
 * RStudio
-* Required R packages: tidyverse, ggplot2,  dplyr, knitr,  markdown
+* Required R packages:
+  * tidyverse
+  * ggplot2
+  * dplyr
+  * knitr
+  * markdown
 
 Install all required packages using:
 install.packages(c("tidyverse", "ggplot2", "dplyr", "knitr", "markdown"))
-
 
 ## Author
 Julieta Pappano
