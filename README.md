@@ -30,11 +30,6 @@ The CPS1985 dataset comprises 534 observations from the U.S. Current Population 
 * Three regression models explore how education and age influence wages.
 * Omitted variable bias (OVB) is identified and quantified, showcasing the importance of including related predictors.
 
-## Project Structure
-* analysis/: Contains the main RMarkdown file used for the analysis (CPS1985_Analysis.Rmd) and the generated report in PDF format.
-* data/: Includes the dataset file (not included in the repository due to licensing restrictions; users must provide their own copy).
-* figures/: Contains visualizations generated during the analysis.
-
 ## Prerequisites
 To replicate the analysis, ensure you have the following:
 * R (version 4.0 or higher)
@@ -51,4 +46,5 @@ install.packages(c("tidyverse", "ggplot2", "dplyr", "knitr", "markdown"))
 
 ## Author
 Julieta Pappano
+
 Data Analyst and Public Policy Specialist, with a keen interest in leveraging data analysis to address policy and economic challenges.
