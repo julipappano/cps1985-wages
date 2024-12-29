@@ -44,10 +44,6 @@ To replicate the analysis, ensure you have the following:
 Install all required packages using:
 install.packages(c("tidyverse", "ggplot2", "dplyr", "knitr", "markdown"))
 
-## Future Work
-* Incorporating interaction effects in regression models.
-* Expanding the analysis with additional socioeconomic variables.
-* Applying similar methods to more recent datasets for comparative analysis.
 
 ## Author
 Julieta Pappano
